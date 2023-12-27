@@ -1,0 +1,30 @@
+---
+// 1. Import layout
+import Layout from "@layouts/Layout.astro";
+
+// 2. Import components
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+
+// 3. Import metadata
+import type { LongMetadataType } from "@/types/Metadata";
+
+// 4. Define props
+export interface Props {
+  classes?: string;
+  metadata: LongMetadataType;
+}
+
+// 5. Get props
+const { classes, metadata } = Astro.props;
+---
+
+<Layout classes={classes} metadata={metadata}>
+  <Header />
+  <main role="main">
+    <article>
+      <slot />
+    </article>
+  </main>
+  <Footer />
+</Layout>

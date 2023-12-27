@@ -1,0 +1,77 @@
+---
+// 1. Import laytout
+import Landing from "@layouts/Landing.astro";
+
+// 2. Import components
+
+// 3. Import metadata
+import type { ShortMetadataType } from "@/types/Metadata";
+
+// 4. Get content
+import { type CollectionEntry, getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const persons = await getCollection("person");
+
+  return persons.map((person: Props) => ({
+    params: { id: person.id },
+    props: person,
+  }));
+}
+
+type Props = CollectionEntry<"person">;
+const person: Props = Astro.props;
+
+type Contact = {
+  name: string;
+  url: string;
+};
+
+const contacts: Contact[] = [
+  {
+    name: person.data.email ? "email" : "", // Ensure that it's not undefined
+    url: person.data.email ? `mailto:${person.data.email}` : "",
+  },
+  ...(person.data.social || []),
+];
+
+// 5. Define classes + Metadata
+const metadata = {
+  description: person.data.bio?.substring(0, 160), // trim description to 160 characters
+  thumbnail_alt: person.data.name,
+  thumbnail: person.data.photo.src,
+  title: person.data.name,
+} as ShortMetadataType;
+
+const classes = "article person";
+---
+
+<Landing classes={classes} metadata={metadata}>
+  <article class="container">
+    <div class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min">
+      <div class="">
+        <img src={person.data.photo.src} alt={person.data.name} />
+      </div>
+      <div class="">
+        <h1 class="mb-4">{person.data.name}</h1>
+
+        <div class="uppercase font-mono mb-10 lead">{person.data.role}</div>
+
+        <p>{person.data.bio}</p>
+
+        {
+          contacts && (
+            <div role="list">
+              {contacts.map((contact, index) => (
+                <>
+                  <a href={contact.url}>{contact.name}</a>
+                  {index < contacts.length - 1 && "/"}
+                </>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</Landing>

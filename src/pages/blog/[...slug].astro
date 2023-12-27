@@ -1,0 +1,96 @@
+---
+// 1. Import layout
+import Article from "@layouts/Article.astro";
+
+// 2. Import components
+import Byline from "@components/Byline.astro";
+import Card from "@/components/Card.astro";
+import Hashtags from "@/components/Hashtags.astro";
+import Hero from "@components/Hero.astro";
+
+// 3. Import metadata
+import type { LongMetadataType } from "@/types/Metadata";
+
+// 4. Get content
+import {
+  getEntry,
+  type CollectionEntry,
+  getCollection,
+} from "astro:content";
+
+import { getRelatedContent } from "@/utils/getContent";
+
+export async function getStaticPaths() {
+  const posts: Props[] = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<"blog">;
+
+const post: Props = Astro.props;
+const { Content } = await post.render();
+const { data: authorData } = await getEntry("person", post.data.author.id);
+const relatedContent = post.data.related ? await getRelatedContent(post.data.related) : null;
+
+// 5. Define classes + Metadata
+const metadata = {
+  author: authorData.name,
+  date: post.data.date,
+  description: post.data.description,
+  thumbnail_alt: post.data.hero.alt,
+  thumbnail: post.data.hero.thumbnail,
+  title: post.data.title,
+} as LongMetadataType;
+
+const classes = "article blog";
+
+---
+
+<Article classes={classes} metadata={metadata}>
+
+  <div class="container">
+    <Hero hero={post.data.hero} type="page" />
+  </div>
+
+  <div class="container-alt">
+    <h1>{post.data.title}</h1>
+    {post.data.description && <p class="lead">{post.data.description}</p>}
+    <Byline author={authorData.name} date={post.data.date} />
+  </div>
+
+  <div class="container-alt lg:mt-12 md:mt-9 mt-6">
+    <Content />
+
+    {post.data.tags && <Hashtags hashtags={post.data.tags} />}
+  </div>
+
+  {
+    relatedContent && (
+      <section class="lg:mt-24 lg:pt-24 md:mt-20 md:pt-20 mt-16 pt-16">
+        <div class="container related">
+          <h2 class="lg:mb-12 md:mb-10 mb-8">Related Posts</h2>
+          <ol
+            role="list"
+            class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+          >
+            {relatedContent.map((post) => (
+              <Card
+                classes="card--blog"
+                description={post.data.description}
+                el="h3"
+                hero={post.data.hero}
+                title={post.data.title}
+                type="long"
+                url={post.url}
+              />
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+</Article>

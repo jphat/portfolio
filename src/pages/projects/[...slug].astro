@@ -1,0 +1,113 @@
+---
+// 1. Import laytout
+import Article from "@layouts/Article.astro";
+
+// 2. Import components
+import Card from "@/components/Card.astro";
+import Hashtags from "@/components/Hashtags.astro";
+import Hero from "@components/Hero.astro";
+import Pill from "@/components/Pill.astro";
+
+// 3. Import metadata
+import type { LongMetadataType } from "@/types/Metadata";
+
+// 4. Get content
+import { getEntry, type CollectionEntry, getCollection } from "astro:content";
+
+import { getRelatedContent } from "@/utils/getContent";
+
+export async function getStaticPaths() {
+  const projects: Props[] = await getCollection("project");
+
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: project,
+  }));
+}
+
+type Props = CollectionEntry<"project">;
+
+const project: Props = Astro.props;
+const { Content } = await project.render();
+const { data: authorData } = project.data.author?.id
+  ? await getEntry("person", project.data.author.id)
+  : { data: { name: "" } };
+const relatedContent = project.data.related
+  ? await getRelatedContent(project.data.related)
+  : null;
+
+// 5. Define classes + Metadata
+const metadata = {
+  author: authorData.name,
+  date: project.data.date,
+  description: project.data.description,
+  thumbnail_alt: project.data.hero.alt,
+  thumbnail: project.data.hero.thumbnail,
+  title: project.data.title,
+} as LongMetadataType;
+
+const classes = "article project";
+---
+
+<Article classes={classes} metadata={metadata}>
+  <div class="container">
+    <Hero hero={project.data.hero} type="page" />
+  </div>
+
+  <div class="container grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min">
+    <div class="">
+      {project.data.type && <Pill pill={project.data.type} />}
+      <h1>{project.data.title}</h1>
+    </div>
+
+    <div class="">
+      {
+        project.data.description && (
+          <p class="lead">{project.data.description}</p>
+        )
+      }
+
+      <Content />
+
+      {project.data.tags && <Hashtags hashtags={project.data.tags} />}
+    </div>
+  </div>
+
+  {
+    project.data.gallery && (
+      <ul class="container grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min py-16">
+        {project.data.gallery.map((image) => (
+          <div>
+            <img src={image.src} alt={image.alt} />
+          </div>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    relatedContent && (
+      <section class="lg:mt-24 md:mt-20 mt-16 lg:pt-24 md:pt-20 pt-16">
+        <div class="container related">
+          <h2 class="lg:mb-12 md:mb-10 mb-8">Related Projects</h2>
+          <ol
+            role="list"
+            class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+          >
+            {relatedContent.map((post) => (
+              <Card
+                classes="card--blog"
+                description={post.data.description}
+                el="h3"
+                hero={post.data.hero}
+                title={post.data.title}
+                type="long"
+                url={post.url}
+              />
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+</Article>

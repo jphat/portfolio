@@ -1,0 +1,51 @@
+---
+// 1. Import layout
+import Landing from "@layouts/Landing.astro";
+
+// 2. Import components
+import Card from "@components/Card.astro";
+
+// 3. Import metadata
+import { blogMetadata } from "@/config";
+
+// 4. Get content
+import { getBlogContent } from "@utils/getContent";
+const posts = getBlogContent({ filter: true, limit: 0, sort: true });
+
+// 5. Define classes + Metadata
+const title = blogMetadata.title;
+const description = blogMetadata.description;
+const classes = "landing blog";
+
+---
+
+<Landing classes={classes} metadata={blogMetadata}>
+  
+  <div class="container">
+    <h1>{title}</h1>
+    <div class="lead">{description}</div>
+  </div>
+
+  <div class="container">
+    {
+      posts && (
+        <ol
+          role="list"
+          class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+        >
+          {posts.map((post) => (
+            <Card
+              classes="card--blog"
+              description={post.data.description}
+              el="h2"
+              hero={post.data.hero}
+              title={post.data.title}
+              type="long"
+              url={post.url}
+            />
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</Landing>

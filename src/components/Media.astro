@@ -1,0 +1,54 @@
+---
+// 1. Import components
+
+// 2. Import data
+
+// 3. Define types + props
+interface Props {
+  alt: string;
+  caption?: string;
+  credit?: string;
+  height?: number;
+  src: string;
+  thumbnail?: string;
+  type: "image" | "embed" | "3d";
+  width?: number;
+}
+// 4. Get props
+const { alt, caption, credit, src, type, width, height } = Astro.props;
+
+// 5. Set variable + property defaults
+
+// 6. Import styles and scripts
+import "@styles/partials/_figure.scss";
+
+---
+
+<!-- class:list={["lg:mb-12 lg:mt-12 max-w-full mb-4 mb-6 md:mb-9 md:mt-9 mt-6"]} -->
+<figure >
+  {
+    type === "image" && (
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+
+  {type === "embed" && <div set:html={src} />}
+
+  {type === "3d" && <div set:html={src} />}
+
+  {
+    (caption || credit) && (
+      <figcaption>
+        {caption && <span class="text-sm text-gray-500">{caption}</span>}
+        {credit && <span class="text-sm text-gray-500">{credit}</span>}
+      </figcaption>
+    )
+  }
+</figure>

@@ -1,0 +1,18 @@
+name: Astro Starlight
+bio: Not mentioning this absurd culture where the more you work, the more people value you. In a sexist and patriarchal society, balancing this agency life with the home and motherhood routines is not easy.
+role: Founder, CEO
+photo: ./images/a-starlight.avif
+type: staff
+email: astro@star.light
+social:
+    - 
+        name: twitter
+        url: https://twitter.com/
+    - 
+        name: linkedin
+        url: https://www.linkedin.com/
+    - 
+        name: github
+        url: https://github.com/
+weight: 1
+draft: false

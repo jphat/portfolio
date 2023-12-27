@@ -1,0 +1,77 @@
+---
+// 1. Import laytout
+import Landing from "@layouts/Landing.astro";
+
+// 2. Import components
+import Card from "@components/Card.astro";
+
+// 3. Import metadata
+import type { ShortMetadataType } from "@/types/Metadata";
+import { hashtagMetadata } from "@/config";
+
+// 4. Get content
+import { getUniqueHashtags } from "@utils/getHashtags";
+import { getTaggedContent } from "@utils/getContent";
+
+export interface Props {
+  hashtag: string;
+}
+
+export async function getStaticPaths() {
+  const hashtags = getUniqueHashtags();
+
+  return hashtags.map((hashtag) => {
+    return {
+      params: { hashtag },
+      props: { hashtag },
+    };
+  });
+}
+
+const { hashtag } = Astro.props;
+const taggedContent = getTaggedContent({ tag: hashtag });
+
+// 5. Define classes + Metadata
+const title = `#${hashtag}`;
+const description = `here are all the items tagged with <em>${hashtag}</em>`;
+const cleanDescription = description.replace(/(<([^>]+)>)/gi, "");
+
+const metadata = {
+  title: title,
+  description: cleanDescription,
+  thumbnail: hashtagMetadata.thumbnail,
+  thumbnail_alt: hashtagMetadata.thumbnail_alt,
+} as ShortMetadataType;
+
+const classes = "landing hashtag";
+---
+
+<Landing classes={classes} metadata={metadata}>
+  <div class="container">
+    <h1>{title}</h1>
+    <p class="lead" set:html={description} />
+  </div>
+
+  <div class="container">
+    {
+      taggedContent && (
+        <ol
+          role="list"
+          class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+        >
+          {taggedContent.map((content) => (
+            <Card
+              el="h2"
+              title={content.data.title}
+              hero={content.data.hero}
+              collection={content.collection}
+              description={content.data.description}
+              type="long"
+              url={content.url}
+            />
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</Landing>

@@ -1,0 +1,156 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-title;
+}
+
+h1 {
+  @apply text-4xl;
+  @apply md:text-5xl;
+  @apply lg:text-6xl;
+  @apply my-4;
+  @apply md:my-6;
+  @apply lg:my-10;
+
+  .landing & {
+    @apply md:text-6xl;
+    @apply lg:text-8xl;
+
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: currentColor;
+  }
+}
+
+h2 {
+  @apply text-3xl;
+  @apply md:text-4xl;
+  @apply lg:text-5xl;
+}
+
+h3 {
+  @apply text-2xl;
+  @apply md:text-3xl;
+  @apply lg:text-4xl;
+}
+
+h4 {
+  @apply text-xl;
+  @apply md:text-2xl;
+  @apply lg:text-3xl;
+}
+
+h5 {
+  @apply text-lg;
+  @apply md:text-xl;
+  @apply lg:text-2xl;
+}
+
+h6 {
+  @apply text-base;
+  @apply md:text-lg;
+  @apply lg:text-xl;
+}
+
+.lead {
+  font-size: calc((1.2 - 1) * 3.5vw + 1rem);
+  @apply font-medium;
+  @apply mb-5;
+  @apply md:mb-7;
+  @apply lg:mb-9;
+}
+
+.text-knockout {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: currentColor;
+}
+
+main {
+  dl,
+  ol,
+  p,
+  ul {
+    @apply mb-8;
+  }
+}
+
+.article main {
+  a {
+    @apply underline underline-offset-2;
+  }
+
+  ol,
+  ul {
+    &.hashtags a {
+      @apply no-underline;
+    }
+
+    li {
+      @apply ml-4;
+      @apply pl-2;
+    }
+
+    &.hashtags li {
+      @apply ml-0;
+      @apply pl-0;
+    }
+  }
+
+  // ol:not(.landing ol) {
+  //   @apply pl-2;
+  //   list-style: decimal;
+  // }
+
+  ul {
+    list-style: "\2013";
+  }
+
+  .related {
+    a {
+      @apply no-underline;
+    }
+
+    ol, ul {
+      @apply pl-0;
+
+      li {
+        @apply list-none;
+        @apply pl-0;
+        @apply ml-0;
+      }
+    }
+  }
+}
+
+dl {
+  @apply mb-8;
+
+  p,
+  ol,
+  ul {
+    @apply mb-0;
+  }
+
+  div {
+    @apply grid grid-cols-3;
+    @apply gap-4;
+    @apply p-4;
+    @apply border border-gray-200;
+
+    &:not(:last-child) {
+      @apply border-b-0;
+    }
+
+    dt {
+      @apply col-span-1;
+    }
+
+    dd {
+      @apply col-span-2;
+    }
+  }
+}

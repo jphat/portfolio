@@ -1,0 +1,4 @@
+name: Astro
+logo: ./images/astro.png
+info: Astro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.
+draft: false

@@ -1,0 +1,31 @@
+---
+// 1. Import components
+
+// 2. Import data
+
+// 3. Define types + props
+interface Props {
+  author?: string;
+  date?: Date;
+}
+
+// 4. Get props
+const { author, date } = Astro.props;
+
+// 5. Set variable + property defaults
+---
+
+<div class="text-base">
+  {author && <span class="author">{author}</span>}
+  {author && date && "/"}
+  {
+    date && (
+      <time datetime={date.toISOString()}>
+        {date.toLocaleDateString(undefined, {
+          dateStyle: "medium",
+          timeZone: "UTC",
+        })}
+      </time>
+    )
+  }
+</div>

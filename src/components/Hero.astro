@@ -1,0 +1,92 @@
+---
+// 1. Import components
+import { Image } from "astro:assets";
+import probe from "probe-image-size";
+
+// 2. Import data
+
+// 3. Define types + props
+import type HeroType from "@/types/Hero";
+
+interface Props {
+  hero: HeroType;
+  type: "card" | "page";
+}
+
+// 4. Get props
+const { hero, type } = Astro.props;
+
+// 5. Set variable + property defaults
+if (hero.type === "image") {
+  const { width, height } = await probe(hero.src);
+  hero.width = width;
+  hero.height = height;
+}
+
+// 6. Import styles and scripts
+import "@styles/partials/_figure.scss";
+
+---
+
+<figure
+  class:list={[
+    "aspect-golden mb-4",
+    type === "card" && "hero--card",
+    type === "page" && "hero--page",
+  ]}
+>
+  {
+    type === "page" && hero.type === "image" && (
+      <img
+        src={hero.src}
+        alt={hero.alt}
+        width={hero.width}
+        height={hero.height}
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+
+  {type === "page" && hero.type === "3d" && <p />}
+
+  {type === "page" && hero.type === "embed" && <p />}
+
+  {
+    type === "page" && (
+      <figcaption>
+        {hero.caption && <span class="text-sm">{hero.caption}</span>}
+        {hero.credit && <span class="text-sm">{hero.credit}</span>}
+      </figcaption>
+    )
+  }
+
+  {
+    type === "card" && (
+      <Image
+        src={hero.thumbnail}
+        alt={hero.alt ?? ""}
+        width="720"
+        height="480"
+      />
+    )
+  }
+</figure>
+
+<!-- <style>
+  .hero--page {
+    @apply md:mb-12;
+  }
+
+  img {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This property makes the image cover the entire container */
+    object-position: center; /* This property centers the image within the container */
+  }
+
+  figcaption {
+    @apply flex gap-4 items-baseline justify-between py-4
+  }
+</style> -->

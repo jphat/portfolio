@@ -1,0 +1,36 @@
+---
+// 1. Import components
+import { Code } from "astro/components";
+import type { BuiltinLanguage } from "shikiji";
+
+// 2. Import data
+
+// 3. Define types + props
+interface Props {
+  code: string;
+  language: BuiltinLanguage;
+}
+
+// 4. Get props
+const { code, language }: Props = Astro.props;
+
+// 5. Set variable + property defaults
+---
+
+<div class="code">
+  <Code code={code} lang={language} />
+</div>
+
+<style lang="scss">
+  .code {
+    @apply lg:my-12;
+    @apply md:my-10;
+    @apply my-8;
+    @apply overflow-x-hidden;
+    @apply overflow-y-auto;
+    @apply p-4;
+    @apply md:p-6;
+    @apply lg:p-8;
+    @apply bg-[#24292e];
+  }
+</style>

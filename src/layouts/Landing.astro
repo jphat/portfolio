@@ -1,0 +1,28 @@
+---
+// 1. Import layout
+import Layout from "@layouts/Layout.astro";
+
+// 2. Import components
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+
+// 3. Import metadata
+import type { ShortMetadataType } from "../types/Metadata";
+
+// 4. Define props
+interface Props {
+  classes?: string;
+  metadata: ShortMetadataType;
+}
+
+// 5. Get props
+const { classes, metadata } = Astro.props;
+---
+
+<Layout classes={classes} metadata={metadata}>
+  <Header />
+  <main role="main">
+    <slot />
+  </main>
+  <Footer />
+</Layout>

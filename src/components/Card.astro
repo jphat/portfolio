@@ -1,0 +1,52 @@
+---
+// 1. Import components
+import Hero from "@components/Hero.astro";
+import type HeroType from "@/types/Hero";
+import Pill from "./Pill.astro";
+
+// 2. Import data
+
+// 3. Define types + props
+interface Props {
+  classes?: string;
+  collection?: string;
+  description?: string;
+  hero?: HeroType;
+  el: "h2" | "h3" | "h4";
+  title: string;
+  link_text?: string;
+  type: "short" | "long";
+  url: string;
+}
+
+// 4. Get props
+const { classes, collection, description, el, hero, link_text, title, type, url } =
+  Astro.props;
+
+// 5. Set variable + property defaults
+const El = el ?? "div";
+const linkText = link_text ?? "Read More";
+---
+
+<li role="listitem" class:list={["card", `card--${type}`, classes]}>
+  <a href={url}>
+    {hero && type === "long" && <Hero hero={hero} type="card" />}
+
+    {collection && <Pill pill={collection} />}
+
+    <El class="line-clamp-2" title={title}>{title}</El>
+
+    <p>{description}</p>
+
+    <p>{linkText} <span aria-disabled="true">&rarr;</span></p>
+  </a>
+</li>
+
+<style lang="scss">
+  figure {
+    @apply mb-6;
+  }
+  h2 {
+    @apply mb-6;
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+// 1. Import components
+
+// 2. Import data
+
+// 3. Define types + props
+export interface Props {
+  hashtags: string[];
+}
+// 4. Get props
+const { hashtags } = Astro.props;
+
+// 5. Set variable + property defaults
+---
+
+<ul role="list" class="hashtags flex gap-2 md:gap-4 lg:mt-12 md:mt-9 mt-6">
+  {
+    hashtags.sort().map((hashtag) => (
+      <li class="
+      first:pl-0
+      font-mono
+      last:pr-0
+      list-none
+      ml-0
+      px-2
+      py-1
+      text-base
+      uppercase
+      ">
+        <a href={`/hashtags/${hashtag}`}>
+          #{hashtag}
+        </a>
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,31 @@
+---
+// 1. Import laytout
+import Landing from "@layouts/Landing.astro";
+
+// 2. Import components
+
+// 3. Import metadata
+import { fourOhFourMetadata } from "@/config";
+import { Image } from "astro:assets";
+
+// 4. Get content
+
+// 5. Define classes + Metadata
+const classes = "landing 404";
+
+---
+
+<Landing classes={classes} metadata={fourOhFourMetadata}>
+  
+  <div class="container">
+    <h1 class="font-mono">404</h1>
+    <Image
+      alt="404"
+      class="w-full"
+      height="737"
+      width="1290"
+      src="https://res.cloudinary.com/josephat/image/upload/v1703466974/portfolio/owlvjnlwnbw5ubvnkcua.png"
+    />
+    <!-- 1290 × 737 -->
+  </div>
+</Landing>

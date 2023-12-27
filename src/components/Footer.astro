@@ -1,0 +1,24 @@
+---
+// 1. Import components
+
+// 2. Import data
+import { site } from "../config";
+
+// 3. Define types + props
+
+// 4. Get props
+
+// 5. Set variable + property defaults
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="py-16">
+  <div
+    class="border-t-2 border-t-gray-200 container flex flex-col gap-8 justify-between lg:flex-row lg:pb-4 lg:pt-24 pt-16"
+  >
+    <div class="">
+      made with <a href="https://astro.build/" target="_blank">astro</a>
+    </div>
+    <div class="">&copy; {currentYear} {site.name}</div>
+  </div>
+</footer>

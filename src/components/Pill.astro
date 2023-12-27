@@ -1,0 +1,21 @@
+---
+// 1. Import components
+
+// 2. Import data
+
+// 3. Define types + props
+interface Props {
+  pill: string;
+}
+
+// 4. Get props
+const { pill } = Astro.props;
+
+// 5. Set variable + property defaults
+---
+
+<div
+  class="font-mono px-2 py-1 bg-gray-200 uppercase inline-flex text-base mb-4"
+>
+  {pill}
+</div>

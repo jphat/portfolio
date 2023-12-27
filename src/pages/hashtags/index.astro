@@ -1,0 +1,44 @@
+---
+// 1. Import layout
+import Landing from "@layouts/Landing.astro";
+
+// 2. Import components
+
+// 3. Import metadata
+import { hashtagsMetadata } from "@/config";
+
+// 4. Get content
+import { getHashtags } from "@/utils/getHashtags";
+const hashtags = getHashtags({ limit: 0, sortBySize: true });
+
+// 5. Define classes + Metadata
+const title = hashtagsMetadata.title;
+const description = hashtagsMetadata.description;
+const classes = "landing hashtags";
+---
+
+<Landing classes={classes} metadata={hashtagsMetadata}>
+  <div class="container">
+    <h1>{title}</h1>
+    <p class="lead">{description}</p>
+  </div>
+
+  <div class="container">
+    {
+      hashtags && (
+        <ol role="list">
+          {hashtags.map((hashtag) => (
+            <li role="listitem">
+              <a href={hashtag.url} title={hashtag.tag}>
+                <span aria-disabled="true">#</span>
+                {hashtag.tag}
+              </a>
+              (<span class="sr-only">number of items</span>
+              {hashtag.count})
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</Landing>

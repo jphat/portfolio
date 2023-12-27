@@ -1,0 +1,51 @@
+---
+import type { LongMetadataType, ShortMetadataType } from "../types/Metadata";
+import { site } from "@/config";
+import "@/styles/main.scss";
+
+interface Props<T extends ShortMetadataType | LongMetadataType> {
+	classes?: string;
+	metadata: T;
+}
+
+const { classes, metadata } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={metadata.description} />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="og:site_name" content={site.name} />
+		<meta name="og:title" content={metadata.title} />
+		<meta name="og:locale" content="en" />
+		<meta name="og:description" content={metadata.description} />
+		<meta name="twitter:card" content="summary" />
+		{metadata.author && <meta name="author" content={metadata.author} />}
+		{
+			metadata.date && (
+				<meta
+					property="article:published_time"
+					content={metadata.date.toISOString()}
+				/>
+			)
+		}
+		{
+			metadata.updated && (
+				<meta
+					property="article:updated_time"
+					content={metadata.updated}
+				/>
+			)
+		}
+		<meta property="og:image" content={metadata.thumbnail} />
+		<meta property="og:image:alt" content={metadata.thumbnail_alt} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{metadata.title} | {site.name}</title>
+	</head>
+	<body class:list={classes}>
+		<slot />
+	</body>
+</html>

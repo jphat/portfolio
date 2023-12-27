@@ -1,0 +1,42 @@
+---
+// 1. Import components
+
+// 2. Import data
+import { mainNavigation } from "@/config";
+
+// 3. Define types + props
+
+// 4. Get props
+
+// 5. Set variable + property defaults
+---
+
+<header>
+  <nav class="container py-9">
+    <div class="flex items-center">
+      <div class="flex justify-between items-center">
+        <a
+          class="link link--site-title text-gray-600 font-title font-medium"
+          href="/"
+        >
+          a<span class="hidden md:inline-flex">stro&nbsp;</span>p<span
+            class="hidden md:inline-flex">ortfolio</span
+          >
+        </a>
+      </div>
+
+      <div id="navbar-collapse" class="ml-auto">
+        {
+          mainNavigation.map((item) => (
+            <a
+              class="p-2 lg:px-4 md:mx-2 text-gray-600 first:ml-0 last:mr-0 first:pl-0 last:pr-0"
+              href={item.url}
+            >
+              {item.title}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </nav>
+</header>

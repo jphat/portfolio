@@ -1,0 +1,19 @@
+name: Skylar Apollo
+bio: Not mentioning this absurd culture where the more you work, the more people value you. In a sexist and patriarchal society, balancing this agency life with the home and motherhood routines is not easy.
+role: President, CTO
+photo: ./images/s-apollo.avif
+type: staff
+email: skylar@apollo.com
+social:
+    - 
+        name: twitter
+        url: https://twitter.com/
+    - 
+        name: linkedin
+        url: https://www.linkedin.com/
+    - 
+        name: github
+        url: https://github.com/
+
+weight: 2
+draft: false

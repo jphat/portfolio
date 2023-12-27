@@ -1,0 +1,171 @@
+---
+// 1. Import laytout
+import Landing from "@layouts/Landing.astro";
+
+// 2. Import components
+import Card from "@components/Card.astro";
+
+// 3. Import metadata
+import { homeMetadata } from "@/config";
+
+// 4. Get content
+import {
+  getBlogContent,
+  getClientContent,
+  getPersonContent,
+  getProjectContent,
+} from "@utils/getContent";
+import { getHashtags } from "@utils/getHashtags";
+
+const clients = getClientContent({ limit: 8 });
+const hashtags = getHashtags({ limit: 8, sortBySize: true });
+const posts = getBlogContent({ limit: 4 });
+const projects = getProjectContent({ limit: 4 });
+const staff = getPersonContent({});
+
+// 5. Define classes + Metadata
+const classes = "landing home";
+
+---
+
+<Landing classes={classes} metadata={homeMetadata}>
+
+  <!-- Hero -->
+  <section>
+    <div class="container">
+      <div class="min-h-[800px] grid content-center">
+        <h1 class="flex flex-col text-center">
+          <span class="tracking-wider">hello, astronaut.</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="pb-9">projects</h2>
+
+      {
+        projects && (
+          <ol
+            role="list"
+            class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+          >
+            {projects.map((project) => (
+              <Card
+                classes="card--project"
+                el="h3"
+                title={project.data.title}
+                type="short"
+                url={project.url}
+              />
+            ))}
+          </ol>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="pb-9">blog</h2>
+
+      {
+        posts && (
+          <ol
+            role="list"
+            class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+          >
+            {posts.map((post) => (
+              <Card
+                classes="card--blog"
+                el="h3"
+                title={post.data.title}
+                type="short"
+                url={post.url}
+              />
+            ))}
+          </ol>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Hashtags -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="pb-9">hashtags</h2>
+
+      {
+        hashtags && (
+          <ol class="flex" role="list">
+            {hashtags.map((hashtag) => (
+              <li class="mx-2 first:ml-0 last:mr-0" role="listitem">
+                <a href={hashtag.url} title={hashtag.tag}>
+                  <span aria-disabled="true">#</span>
+                  {hashtag.tag}
+                </a>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+
+      <p>
+        <a href="/hashtags" title="all hashtags">
+          View all <span aria-disabled="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Our Clients -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="pb-9">our clients</h2>
+      {
+        clients && (
+          <ol role="list" class="flex items-center gap-x-10">
+            {clients.map((client) => (
+              <li>{client.data.name}</li>
+            ))}
+          </ol>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Our Team -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="pb-9">our team</h2>
+
+      {
+        staff && (
+          <ol
+            role="list"
+            class="grid gap-12 grid-cols-1 md:grid-cols-2 auto-rows-min"
+          >
+            {staff.map((person) => (
+              <Card
+                el="h3"
+                link_text={`Read Profile`}
+                title={person.data.name}
+                type="short"
+                url={person.url}
+              />
+            ))}
+          </ol>
+        )
+      }
+
+      <p>
+        <a href="/our-team" title="our team">
+          View all <span aria-disabled="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
+  </section>
+</Landing>

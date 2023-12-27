@@ -4,6 +4,10 @@
 yarn install
 ```
 
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/jphat/portfolio)
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/jphat/portfolio)
+
+
 ## 🚀 Project Structure
 
 Inside this portfolio project, you'll see the following folders and files:

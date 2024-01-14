@@ -43,6 +43,7 @@ const { classes, metadata } = Astro.props;
 		<meta property="og:image" content={metadata.thumbnail} />
 		<meta property="og:image:alt" content={metadata.thumbnail_alt} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<title>{metadata.title} | {site.name}</title>
 	</head>
 	<body class:list={classes}>

@@ -3,7 +3,7 @@ import type { ShortMetadataType } from "./types/Metadata";
 export const site = {
   email: 'hello@astro.build',
   name: "astro portfolio",
-  url: "https://localhost:4321",
+  url: "http://localhost:4321",
 } as { email: string, name: string, url: string };
 
 export const mainNavigation = [

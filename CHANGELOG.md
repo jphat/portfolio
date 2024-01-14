@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning].
 
 - /
 
+## [0.1.0] - 2024-01-14
+
+### Added
+
+- Sitemap functionality
+- Upgrade Astro to 4.1.0
+
 ## [0.0.2] - 2023-12-26
 
 ### Added
@@ -24,5 +31,6 @@ and this project adheres to [Semantic Versioning].
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
+[0.0.2]: https://github.com/jphat/Repository/compare/v0.1.0...v0.0.2
 [0.0.2]: https://github.com/jphat/Repository/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/jphat/Repository/releases/tag/v0.0.1
